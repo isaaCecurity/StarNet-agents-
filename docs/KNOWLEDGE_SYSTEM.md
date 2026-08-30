@@ -1,78 +1,98 @@
 # Knowledge and Memory System
 
+## Current Decision
+
+Do **not** select or install Obsidian, a vector database, or an external retrieval service yet.
+
+The StarNet audit established that the installed runtime already provides native memory/reflection, beliefs with provenance, records/post-mortems, agent context files, a shared Commander Dossier and a seeded `second-brain/` workspace.
+
+We will test these native mechanisms first. An external knowledge layer remains a candidate only if a concrete capability gap is demonstrated.
+
 ## Objective
 
-Create a durable second brain that humans can understand and maintain while agents can retrieve precise context without scanning the entire knowledge base.
+Provide durable organizational/project knowledge while giving agents the smallest relevant context required for a task.
 
-## Proposed Architecture
+## Current Native-First Architecture
 
-`Local Markdown knowledge → indexing/search → retrieval layer → MCP/tool → StarNet agents`
+`Commander Dossier + agent context + StarNet memory/records + seeded second brain → StarNet retrieval/context → agent`
 
-Obsidian is the preferred human-facing/local knowledge layer for the initial implementation because Markdown keeps the knowledge portable. The retrieval layer is intentionally separate so the project can replace the UI or indexing technology later.
+Potential future extension, only if required:
+
+`Local Markdown/Obsidian → indexing/retrieval → MCP/tool → StarNet agents`
 
 ## Knowledge Domains
 
+Conceptually retain separation between:
+
 ```text
-Knowledge Vault/
-├── Organization/
-│   ├── Vision.md
-│   ├── Principles.md
-│   ├── Brand/
-│   ├── Strategy/
-│   └── Operations/
-├── Products/
-│   ├── BigFlow/
-│   ├── Shift-OS/
-│   ├── Lingora/
-│   └── Mind-Flow/
-├── Marketing/
-├── Research/
-├── Decisions/
-├── Lessons-Learned/
-└── Archive/
+Organization/
+Products/
+Marketing/
+Research/
+Decisions/
+Lessons-Learned/
+Archive/
 ```
+
+The exact filesystem/vault structure will be created only after native capability testing.
+
+## Native Components to Evaluate
+
+### Commander Dossier
+Shared station-level context that folds into agent briefings.
+
+### Agent Context
+`context.md` provides project/domain context for an individual agent.
+
+### Memory / Reflection
+StarNet can propose memories after work; the user can keep, edit or discard them.
+
+### Beliefs
+Stored beliefs retain provenance to the run that produced them.
+
+### Records
+Run history, insights, post-mortems and restore points provide operational history.
+
+### Seeded Second Brain
+A `second-brain/` workspace already exists in the audited station. Its structure and retrieval behavior must be tested before adding another knowledge product.
 
 ## Retrieval Rules
 
-1. Identify the task/project first.
-2. Filter by metadata and permissions.
-3. Search locally/lexically where possible.
-4. Use semantic/vector retrieval where it improves recall.
-5. Return only relevant documents/chunks.
-6. Preserve source references.
-7. Give the reasoning model only the context it needs.
+1. Identify task/project first.
+2. Apply permissions and scope.
+3. Retrieve only relevant context.
+4. Prefer deterministic/local filtering before expensive semantic reasoning.
+5. Preserve provenance/source references.
+6. Do not inject the entire knowledge base by default.
+7. Measure token usage before and after retrieval/context changes.
 
 ## Memory Types
 
-- Working memory: current task and temporary context.
-- Project memory: architecture, requirements, current state and product facts.
-- Organizational memory: principles, strategy, brand and operating rules.
-- Long-term memory: durable lessons, decisions and patterns.
+- Working/task context
+- Project/product knowledge
+- Organization-wide context
+- Durable decisions and lessons
+- Agent-specific memories/beliefs
 
-## Memory Agent
+## Knowledge Integrity
 
-The memory agent acts as a librarian/curator. It can turn rough notes into structured records, suggest tags/links, detect duplication and propose canonical updates.
-
-It should **not** silently delete information or invent facts. Important changes should preserve source and history.
-
-## Canonical Source Rule
-
-For each important subject, maintain one authoritative document. Other notes should link to it rather than creating competing “final” versions.
+Authoritative business facts must not be silently rewritten. Important changes should preserve provenance/history. Critical policies require human review before modification.
 
 ## Security
 
-Do not place API keys, passwords, OAuth tokens, private credentials or sensitive secrets in the knowledge vault. Apply agent-level path and topic permissions.
+Never place API keys, passwords, OAuth tokens, cookies, private keys or other secrets in the knowledge system, prompts, memory notes or GitHub repository.
 
-## Token-Efficiency Objective
+## Evaluation Plan
 
-The knowledge system exists partly to reduce context waste. A successful retrieval should answer: “What is the smallest set of trusted information required for this task?”
-
-## Evaluation
-
-Measure retrieval quality using:
-- relevance of returned context
+Before adopting external retrieval, test:
+- context relevance
 - missing-context rate
 - irrelevant-context rate
-- latency
-- token usage before/after retrieval
-- agent task success rate
+- retrieval latency
+- tokens injected per task
+- task success rate
+- repeatability
+
+The key question is not "which note-taking app is best?" It is:
+
+> **Can StarNet reliably retrieve the smallest trusted context needed for the job?**
