@@ -4,6 +4,28 @@
 
 Agents are software principals, not trusted administrators. Access is granted by role and minimized by default.
 
+## Native StarNet Controls
+
+The audit confirmed that StarNet already provides important governance primitives:
+- capability/toolset gating
+- workstation/execution profiles
+- approval prompts
+- Full Power controls
+- budget limits
+- runtime controls
+- global E-STOP
+- autonomy/reach controls
+- task/delegation boundaries
+
+Use these native controls before creating custom governance infrastructure.
+
+## Current Safety State
+
+- **Global Full Power: OFF.** Keep it OFF.
+- **E-STOP: ENGAGED.** Keep it engaged during configuration/hardening.
+- **JUNIOR: FULL POWER.** Treat this as temporary and review before production.
+- Other clearly observed crew members use approval-based risky-action settings.
+
 ## Least Privilege
 
 Each agent should have explicit access to:
@@ -13,16 +35,9 @@ Each agent should have explicit access to:
 - allowed communication channels
 - allowed external actions
 
-Everything else is denied.
+Everything else should be denied or approval-gated.
 
-## Secrets
-
-- Never commit secrets to GitHub.
-- Use environment variables or a dedicated secret manager.
-- Do not put credentials in prompts, memory notes or logs.
-- Separate production credentials from development credentials.
-
-## Human Approval
+## Approval Policy
 
 Human approval is required initially for:
 - public social posts
@@ -32,32 +47,47 @@ Human approval is required initially for:
 - financial actions
 - security-sensitive configuration changes
 - changes to critical policies
+- other irreversible/high-impact external actions
 
-## Sandboxing
+## Autonomy Policy
 
-Untrusted code and risky automation should run in isolated environments. Production systems should not be the default workspace for agents.
+Begin with WAIT/SUGGEST or draft-oriented operation. Do not enable unrestricted FREE autonomy until reliability has been demonstrated.
+
+For unattended work, prefer sandbox/draft reach over send/publish reach.
+
+## Execution Isolation
+
+Prefer StarNet's bounded execution profiles such as Safe Cell, Station Gear or Trusted Project for ordinary work. Do not use unrestricted host access as the default.
+
+## Secrets
+
+- Never commit secrets to GitHub.
+- Use environment variables or a dedicated secret manager.
+- Do not place credentials in prompts, memory notes or logs.
+- Separate production credentials from development credentials.
+- Never place secrets in the knowledge vault.
 
 ## Auditability
 
-Record:
-- who/what initiated a task
-- workflow ID
+Record where StarNet/provider tooling permits:
+- initiating user/request
+- workflow/task identifier
 - agent actions
 - tools called
 - relevant outputs
 - approvals
-- final external actions
+- external actions
 - failures
+- cost/usage
 
 ## Emergency Controls
 
-The system should eventually provide:
-- global pause
-- per-agent disable
-- per-workflow disable
-- credential revocation
-- spending limit enforcement
+StarNet's global E-STOP is the first emergency control. Additional per-agent/per-workflow controls should use native mechanisms where available before custom implementation.
 
 ## Knowledge Integrity
 
-Agents must not silently rewrite authoritative business facts. Major decisions should have provenance and version history.
+Agents must not silently rewrite authoritative business facts. Important organizational decisions and critical policies require provenance and human review.
+
+## Security Principle
+
+Do not expand permissions because an agent is inconvenient to configure. First determine the exact capability needed, then grant the narrowest safe access.
