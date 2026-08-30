@@ -2,37 +2,65 @@
 
 ## Role Design Principles
 
-Each agent gets a narrow responsibility, explicit tools, explicit knowledge scope, a defined output format, and an escalation path.
+Each agent should have a distinct responsibility, explicit tools/capabilities, explicit knowledge scope, a defined output expectation and an escalation path.
 
-## Initial Social-Media Workforce
+**Do not create an agent simply because a role appears on the long-term architecture.** First check whether an existing agent or StarNet's native agent classes can perform the responsibility cleanly.
+
+## Existing Crew Observed
+
+The supplied screenshots clearly identify:
+
+- **JUNIOR** — Overseer/general agent; currently has FULL POWER and must be reviewed before production.
+- **TOBI WEB DESIGNER** — Web Designer.
+- **ALICE PRODUCT MAN** — Product Manager.
+- **KEN DEVOPS ENG** — DevOps Engineer.
+- **JEFF ENGINEER** — Engineer.
+- **BOB QA TESTER** — QA Tester.
+
+Two additional agents were previously assumed but are not clearly identified in the supplied screenshots. Their existence and configuration must be verified before documenting them.
+
+## Native Role/Recruitment System
+
+The audited StarNet Recruitment Bay exposes approximately **35 agent classes**:
+- 7 Code
+- 13 Research
+- 15 Ops
+
+The available native classes include specialized strategic/research/operational roles. Evaluate these classes before creating custom agents.
+
+StarNet also has a native Overseer/task-delegation concept. Task Delegation tools include `team.dispatch`, `team.spawn`, `team.summon`, `team.subagents`, `team.steer`, `team.interrupt` and `team.resume`. Determine whether JUNIOR is the intended orchestrator before creating a separate Commander/Orchestrator agent.
+
+## Initial Social-Media Workforce — Candidate Roles
+
+These are **candidate responsibilities**, not yet-created agents:
 
 ### Social Media Strategist
 **Purpose:** Turn business goals into content strategy.
 
-**Can:** read organization brand rules, audience definitions, product positioning and approved analytics.
+**Can:** read approved organization, audience, product positioning and analytics context.
 
-**Cannot:** publish directly; change brand rules; access secrets.
+**Cannot:** publish directly or change canonical brand rules.
 
 ### Research / Trend Agent
 **Purpose:** Find relevant topics, trends, competitors and supporting information.
 
-**Can:** use approved web/research tools and public sources.
+**Can:** use approved research/web tools and public sources.
 
 **Cannot:** treat unverified claims as facts or publish externally.
 
 ### Content Creation Agent
-**Purpose:** Draft posts, threads, captions, hooks, scripts and content variants.
+**Purpose:** Draft posts, threads, captions, hooks, scripts and variants.
 
-**Can:** read brand voice and approved product information.
+**Can:** read approved brand voice and product information.
 
 **Cannot:** publish or invent product claims.
 
 ### Brand / Quality Reviewer
-**Purpose:** Independently check drafts for accuracy, tone, clarity, brand consistency and risk.
+**Purpose:** Independently check accuracy, tone, clarity, brand consistency and risk.
 
 **Can:** reject or request changes.
 
-**Cannot:** silently rewrite core business facts.
+**Cannot:** silently change core business facts.
 
 ### Publishing / Scheduling Agent
 **Purpose:** Execute approved publishing/scheduling actions.
@@ -42,38 +70,39 @@ Each agent gets a narrow responsibility, explicit tools, explicit knowledge scop
 **Cannot:** publish unapproved content.
 
 ### Analytics Agent
-**Purpose:** Analyze performance and recommend improvements.
+**Purpose:** Analyze approved performance metrics and recommend improvements.
 
-**Can:** read approved metrics.
-
-**Cannot:** alter historical metrics or publish conclusions as facts without evidence.
+**Cannot:** alter historical metrics or present unsupported conclusions as facts.
 
 ### Knowledge / Memory Agent
-**Purpose:** Curate durable organizational knowledge.
+**Purpose:** Curate durable organizational knowledge and lessons.
 
 **Can:** classify, link, summarize and propose updates.
 
-**Cannot:** destructively delete important knowledge or invent facts.
+**Cannot:** silently delete authoritative knowledge or invent facts.
 
-## Future Roles
+## Long-Term Roles
 
-- Commander
-- Orchestrator
-- Strategy Agent
-- Planning/Architect Agent
-- Evaluation Agent
-- Backend Agent
-- Frontend Agent
-- QA Agent
-- Security Agent
-- DevOps Agent
-- Customer Support Agent
-- Email/Outreach Agent
-- Finance/Operations Agent
-- System Architect Agent
+Potential roles include:
+- Strategy
+- Planning/Architect
+- Evaluation
+- Marketing
+- Research
+- Customer Support
+- Email/Outreach
+- Analytics
+- Operations
+- Code Review
+- QA
+- Security
+- DevOps
+- System Architecture
+
+These remain subject to the native-agent-first rule.
 
 ## Permission Model
 
-Default: **deny**. An agent receives access only to the tools, projects, folders and data required for its job.
+Default: **deny/minimize**. An agent receives only the tools, projects, folders, data and external actions required for its job.
 
-Public posting, external messaging, production changes, destructive operations and credential-sensitive operations require explicit policy and normally human approval.
+Public posting, sensitive external messaging, production changes, destructive operations and credential-sensitive actions require explicit policy and normally human approval.
