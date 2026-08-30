@@ -2,124 +2,178 @@
 
 ## Architectural Goal
 
-Build a personalized AI workforce **on top of the existing StarNet desktop AI-agent harness**. StarNet is the runtime/application and already provides the primary visual interface, agent/workspace model, communications, provider connections and orchestration capabilities. This repository defines the configuration, knowledge, workflows, governance and long-term operating model we want to implement within that environment.
+Build a personalized AI workforce **inside and on top of the existing StarNet desktop AI-agent harness**. StarNet is the runtime/application and already provides the primary UI, agents, workstations, orchestration primitives, memory, tools, permissions, approvals, models, budgets and automation mechanisms.
+
+This repository is the project control plane: it defines the organizational configuration, policies, knowledge strategy, workflow designs, governance rules, decisions and implementation roadmap.
 
 ## Important Boundary
 
 We are **not building a replacement StarNet web application**.
 
-The architecture has two parts:
+The architecture has two layers:
 
-1. **StarNet runtime** — the installed executable/desktop application that provides the UI, agents, workspaces, orchestration, integrations and runtime state.
-2. **StarNet Agents project layer** — this GitHub repository plus the knowledge system, workflow definitions, prompts/policies, configuration documentation and future supporting services that make the StarNet runtime into a personalized organizational AI workforce.
+1. **StarNet runtime** — installed local executable/desktop application providing the operational environment.
+2. **StarNet Agents project layer** — this repository plus only those supporting knowledge/integration components that StarNet cannot provide natively.
 
-## Layers
+## Native StarNet Substrate Observed
 
-### 1. User / Native StarNet Interface
-- StarNet desktop application
-- Crew/agent view
-- Work/task view
-- Build/configuration view
-- System/settings view
-- Agent communications
+The audit of the supplied StarNet screenshots/settings established native support for:
+
+- Crew and agent recruitment/classes.
+- Agent dossiers and structured prompt files: `identity.md`, `purpose.md`, `context.md`, `operating-manual.md`.
+- Per-agent stations/workspaces.
+- Memory, reflection, beliefs, records, post-mortems and restore points.
+- Agent growth/performance tracking.
+- Toolsets and capability gating.
+- Execution profiles and workstation isolation.
+- Approval prompts and Full Power controls.
+- Task delegation/orchestration tools.
+- Skills and a 73-skill library in the audited station.
+- Recipes; 101 were visible in the audited station.
+- Scheduled Routines.
+- Active Loops such as Build/Test/Verify, Sweep & Fix and Research Loop.
+- Night Shift and configurable autonomy controls.
+- Quest/goal/milestone tracking.
+- Shared Commander Dossier/context.
+- MCP/connectors; Composio was visibly connected with 7 tools.
+- Model clearance tiers (DEEP/BALANCED/FAST) and fallback chains.
+- Multiple model providers.
+- Per-run, per-agent, per-day and global budget controls.
+- Runtime concurrency/iteration controls.
+- Deliverables/Workshop Library.
+- Extensions with hooks/plugins.
+- Communication channels including Slack.
+- Global E-STOP.
+
+These are **observed capabilities**, not assumptions about undocumented behavior. Production use still requires targeted verification.
+
+## Architecture Layers
+
+### 1. User / Native Interface
+- StarNet desktop UI
+- Crew / Agent Dossier
+- Work / Build / System views
+- Comms
 - Slack and other connected channels
 
-### 2. Executive / Control
-- Strategy Agent: what should happen?
-- Planning/Architect Agent: how should it happen?
-- Commander: coordinate a major objective.
-- Orchestrator: route tasks and manage dependencies.
-- Evaluation Agent: did it work and meet requirements?
+### 2. Native Control and Orchestration
+Use StarNet's native mechanisms first:
+- Commander/Overseer behavior
+- Task delegation
+- Crew management
+- Quest/goals
+- Recipes
+- Routines
+- Loops
+- Native approvals
+- E-STOP
 
-Where StarNet already provides orchestration or task-management functionality, use the native capability rather than duplicating it externally.
+Do not create a second orchestration layer unless a concrete StarNet gap is demonstrated.
 
 ### 3. Specialized Workforce
-Social, research, content, outreach, analytics, support, operations, engineering, security, QA and future domain agents.
+Initial priority:
+- Social media strategy
+- Research/trends
+- Content
+- Brand/quality review
+- Publishing/scheduling
+- Analytics
+- Knowledge curation
 
-Initial priority is social media/marketing; coding automation is deliberately deferred.
+Later:
+- Marketing
+- Customer support
+- Outreach
+- Product strategy
+- Engineering/code review
+- QA
+- Security
+- DevOps
+- Operations
 
 ### 4. Knowledge / Memory
-Human-readable source of truth → index → retrieval → focused context.
+Start with StarNet's native:
+- Commander Dossier
+- Agent context files
+- Memory/reflection/beliefs
+- Records
+- seeded second-brain workspace
 
-Recommended conceptual split:
-- Organization memory
-- Product/project memory
-- Task/working memory
-- Long-term lessons
+Only add an external knowledge vault/index/retrieval layer if testing demonstrates that native capabilities are insufficient. Obsidian remains a candidate, not a decision.
 
-The exact implementation may use StarNet's native persistent memory plus an external/local knowledge vault and retrieval layer where that provides better control or search quality.
+### 5. Tool / Integration Layer
+Use:
+- Native StarNet toolsets
+- Native filesystem/workbench capabilities
+- MCP
+- Composio
+- Slack
+- Approved external APIs/services
 
-### 5. Workflow / Automation
-Trigger → retrieve context → reason → execute → evaluate → approval if required → action → monitor → record outcome.
-
-Prefer StarNet-native schedules, recipes, skills and event/automation capabilities where suitable. Add external workflow infrastructure only when StarNet cannot provide the required behavior reliably.
+Each agent receives only the capabilities required for its responsibility.
 
 ### 6. Model Layer
-Model provider(s) selected by task complexity. Strong models for high-value reasoning; economical models for routine tasks.
+Use StarNet's native clearance/routing model:
 
-OpenRouter is currently being used during setup. Provider configuration and rate-limit behavior must be measured before committing to a paid model strategy.
+- **DEEP** — strategy, architecture, difficult decisions and high-value evaluation.
+- **BALANCED** — planning, research synthesis, normal specialist work and review.
+- **FAST** — classification, tagging, formatting, simple summaries and routine tasks.
 
-### 7. Execution / Integration Layer
-StarNet connectors, MCP servers and controlled tools for:
-- GitHub
-- Social platforms
-- Email
-- Slack
-- Browsers/APIs
-- Cloud infrastructure
-- Local files and applications
-- Future business systems
+Use fallback chains where appropriate. Avoid vendor-specific business logic.
 
-Each agent receives only the tools and permissions required for its role.
+### 7. Automation
+Prefer StarNet-native:
+- Recipes
+- Routines
+- Active Loops
+- Night Shift
+- Event/channel triggers where available
 
-### 8. Observability
-- Agent activity
-- Workflow execution
-- Token/model usage
-- Spend
-- Errors
-- Provider/rate-limit events
-- Application/service logs
-- Alerts
-- Audit history
+Do not introduce an external workflow platform until native mechanisms are shown to be insufficient.
 
-Use StarNet's native runtime/spend information where available, then add external observability only for gaps.
+### 8. Observability and Cost
+Use StarNet and provider telemetry for:
+- agent activity
+- runs
+- errors
+- tokens
+- model usage
+- spend
+- retries
+- workflow state
+
+The audited OpenRouter logs showed several ~34K–37K input-token requests with tiny outputs. Context efficiency is therefore an immediate optimization target.
 
 ### 9. Governance
-Least privilege, secret isolation, approvals, rate limits, budget limits, sandboxing and emergency stop controls.
+Cross-cutting controls:
+- least privilege
+- approval gates
+- execution profiles
+- budget caps
+- model limits
+- E-STOP
+- secret isolation
+- auditability
+- controlled autonomy
+
+Global Full Power remains OFF.
 
 ## Target Data Flow
 
-`User → StarNet Interface/Channel → Orchestrator → Strategy/Planning → Specialist Agent → Knowledge Retrieval → Tool/Workflow → Evaluation → Approval → External Action → Monitoring → Learning`
+`User → StarNet/Slack → Native Orchestration → Specialist → Relevant Knowledge/Memory → Tool/MCP → Evaluation → Approval if required → External Action → Monitoring → Record/Learning`
 
-Not every request needs every layer. Simple tasks should take the shortest safe path.
-
-## Context Efficiency
-
-Agents should not receive the entire knowledge vault, repository or conversation history by default. Retrieval should select the smallest useful context. Deterministic search, metadata filtering and embeddings should happen before expensive LLM reasoning where practical.
+Not every request requires every stage. Simple tasks should take the shortest safe path.
 
 ## Native-vs-External Rule
 
-Before adding another platform, ask:
+Before adding another platform:
 
-1. Does StarNet already provide this capability?
-2. Is the native implementation sufficient for our requirements?
-3. If not, can an MCP/connector solve the gap?
-4. If not, should we add a small supporting service?
-5. Only then consider a separate orchestration/workflow platform.
-
-This prevents unnecessary duplication and keeps the system understandable and cost-efficient.
-
-## Failure Boundaries
-
-Every external action should have:
-- permission boundary
-- timeout
-- retry policy
-- idempotency strategy where applicable
-- audit record
-- rollback or recovery plan where feasible
+1. Does StarNet already provide the capability?
+2. Is the native implementation sufficient?
+3. Can MCP/Composio provide the missing integration?
+4. Can a small supporting service solve the remaining gap?
+5. Only then consider a separate platform.
 
 ## Scaling Rule
 
-Add agents only when there is a distinct responsibility that cannot be handled cleanly by an existing role. More agents are not automatically better; unnecessary delegation increases complexity and token cost.
+Add an agent only when it has a genuinely distinct responsibility. More agents increase coordination overhead, context usage and failure surface.
